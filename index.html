@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Image Classifier - Anosh.S</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="Machine Learning, Data Science" />
+	<meta name="author" content="Anosh Samsudeen" />
+
+	<!-- Load the latest version of TensorFlow.js -->
+	<script src = "https://unpkg.com/@tensorflow/tfjs"></script>
+	<script src = "https://unpkg.com/@tensorflow-models/mobilenet"></script>
+	<script src="https://unpkg.com/@tensorflow-models/knn-classifier"></script>
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!--<link rel="shortcut icon" href="favicon.ico">-->
+
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+	<!--<nav id="colorlib-main-nav" role="navigation">
+		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
+		<div class="js-fullheight colorlib-table">
+			<div class="colorlib-table-cell js-fullheight">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="text" class="form-control" id="search" placeholder="Enter any key to search...">
+							<button type="submit" class="btn btn-primary"><i class="icon-search3"></i></0$>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<ul>
+							<li class="active"><a href="index.html">Home</a></li>
+							<li><a href="work.html">Work</a></li>
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="head-title">Gallery</h2>
+						<a href="images/work-1.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-1.jpg);">
+							<span><i class="icon-search3"></i></span>
+						</a>
+						<a href="images/work-2.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-2.jpg);">
+							<span><i class="icon-search3"></i></span>
+						</a>
+						<a href="images/work-3.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-3.jpg);">
+							<span><i class="icon-search3"></i></span>
+						</a>
+						<a href="images/work-4.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-4.jpg);">
+							<span><i class="icon-search3"></i></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>-->
+
+	<div id="colorlib-page">
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="colorlib-navbar-brand">
+							<a class="colorlib-logo" href="index.html">ML</a>
+						</div>
+						<!--<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>-->
+					</div>
+				</div>
+			</div>
+		</header>
+		<div id="colorlib-hero" class="js-fullheight">
+			<!--Class in the div below is meant to link to the owl-corousel javascript for automatic scrolling of the follwing stuff...-->
+			<div class="">
+				<div class="item">
+					<div class="hero-flex js-fullheight">
+						<div class="col-three-forth">
+							<div class="hero-img js-fullheight">
+								<video autoplay playsinline muted id="webcam" class="hero-img js-fullheight" width="1000" height="975"></video>
+							</div>
+						</div>
+						<div class="col-one-forth js-fullheight">
+							<div class="display-t js-fullheight">
+								<div class="display-tc js-fullheight">
+									<h2 id="console" class="number"></h2>
+									<div class="text-inner">
+										<div class="desc">
+											<span class="tag">Machine Learning</span>
+											<h2>Intermediate image classification</h2>
+											<p>Initiate intermediate activations through capturing different images and assigning each to a class of choice from the buttons below. Through bootstrapping TensorFlow’s training with the pre-trained model, MobileNet, this simple “teachable machine” adopts the technique of “transfer learning”. For it to work effectively, take images that would be similar for each class e.g. several images of a different person for each class. </p>
+											<p><button id="class-a" class="btn-view">Class A<i class=""></i></button></p>
+											<p><button id="class-b" class="btn-view">Class B<i class=""></i></button></p>
+											<p><button id="class-c" class="btn-view">Class C<i class=""></i></button></p>
+											<!--<div id="console" class="number"></div>-->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="item">
+					<div class="hero-flex js-fullheight">
+						<div class="col-three-forth">
+							<div class="hero-img js-fullheight" style="background-image: url(images/img_bg_2.jpg);"></div>
+						</div>
+						<div class="col-one-forth js-fullheight">
+							<div class="display-t js-fullheight">
+								<div class="display-tc js-fullheight">
+									<h2 class="number"></h2>
+									<div class="text-inner">
+										<div class="desc">
+											<span class="tag">Photography</span>
+											<h2>Capture interesting things.</h2>
+											<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+											<p><a href="work.html" class="btn-view">View Galleries <i class="icon-arrow-right3"></i></a></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="hero-flex js-fullheight">
+						<div class="col-three-forth">
+							<div class="hero-img js-fullheight" style="background-image: url(images/img_bg_3.jpg);"></div>
+						</div>
+						<div class="col-one-forth js-fullheight">
+							<h2 class="number">03/03</h2>
+							<div class="display-t js-fullheight">
+								<div class="display-tc js-fullheight">
+									<div class="text-inner">
+										<div class="desc">
+											<span class="tag">Discover</span>
+											<h2>Discover New Things</h2>
+											<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+											<p><a href="work.html" class="btn-view">View Galleries <i class="icon-arrow-right3"></i></a></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 col-pb-sm text-center">
+							<div class="row">
+								<div class="col-md-10">
+									<h2>Office</h2>
+									<p>Wherever you want it to be!</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-pb-sm text-center">
+							<h2>Get in Touch</h2>
+							<p><a href="#">anoshs4@gmail.com</a></p>
+						</div>
+						<div class="col-md-4 col-pb-sm text-center">
+							<h2>Social</h2>
+							<p class="colorlib-social-icons">
+								<a href="https://github.com/Anoshawott" target="_blank"><i class="icon-github"></i></a>
+								<a href="https://twitter.com/Anoshawott" target="_blank"><i class="icon-twitter3"></i></a>
+								<a href="https://www.linkedin.com/in/anoshs/" target="_blank"><i class="icon-linkedin4"></i></a>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<p>
+								<span class="block"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --><br></span>
+								<span class="block">A webapp by Anosh.S</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+	<!-- Load index.js after the content of the page -->
+  <script src = "index.js"></script>
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Owl Carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+
+	<!-- Main JS (Do not remove) -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
