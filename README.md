@@ -11,3 +11,4 @@ This custom 3-class object classifier using a camera makes use of an internal re
 NOTE: If the web page appears messy try adjusting the zoom of your internet browser, didn't have time to create responsive webpages 😥😥
 
 source https://www.tensorflow.org/js/tutorials/transfer/image_classification
+Website template courtesy of ColorLib.
